@@ -192,6 +192,23 @@
       pointer-events: none;
     }
 
+
+    /* ── VALIDATION ── */
+    .field input:invalid:not(:placeholder-shown),
+    .field select:invalid:not([value=""]) {
+      border-color: #e55;
+    }
+    .field input:valid:not(:placeholder-shown) {
+      border-color: var(--green);
+    }
+    .field-error {
+      font-size: 0.75rem;
+      color: #e55;
+      margin-top: 0.3rem;
+      display: none;
+    }
+    .field input.error { border-color: #e55 !important; }
+    .field input.error + .field-error { display: block; }
     /* ── JOB SIZE CARDS ── */
     .size-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
     .size-card input[type="radio"] { display: none; }
@@ -418,21 +435,25 @@
             <div class="field-row">
               <div class="field">
                 <label>Full Name <span>*</span></label>
-                <input type="text" name="name" placeholder="John Smith" required />
+                <input type="text" name="name" placeholder="John Smith" required minlength="2" autocomplete="name" />
+                <span class="field-error">Please enter your full name.</span>
               </div>
               <div class="field">
                 <label>Phone Number <span>*</span></label>
-                <input type="tel" name="phone" placeholder="(267) 555-0100" required />
+                <input type="tel" name="phone" placeholder="(267) 555-0100" required pattern="[\+]?[0-9\s\-\(\)]{7,15}" title="Enter a valid phone number" autocomplete="tel" oninput="formatPhone(this)" />
+                <span class="field-error">Enter a valid US phone number.</span>
               </div>
             </div>
             <div class="field-row">
               <div class="field">
                 <label>Email <span style="color:#bbb;font-weight:400;">(optional)</span></label>
-                <input type="email" name="email" placeholder="you@email.com" />
+                <input type="email" name="email" placeholder="you@email.com" autocomplete="email" />
+                <span class="field-error">Enter a valid email address.</span>
               </div>
               <div class="field">
                 <label>City / ZIP <span>*</span></label>
-                <input type="text" name="location" placeholder="Philadelphia, PA or 19103" required />
+                <input type="text" name="location" placeholder="Philadelphia, PA or 19103" required minlength="3" autocomplete="postal-code" />
+                <span class="field-error">Enter your city or ZIP code.</span>
               </div>
             </div>
           </div>
@@ -633,12 +654,43 @@
       currentPage = n;
     }
 
+    function formatPhone(input) {
+      let v = input.value.replace(/\D/g, '').substring(0, 10);
+      if (v.length >= 6) v = '(' + v.substring(0,3) + ') ' + v.substring(3,6) + '-' + v.substring(6);
+      else if (v.length >= 3) v = '(' + v.substring(0,3) + ') ' + v.substring(3);
+      input.value = v;
+    }
+
+    function showError(input, show) {
+      input.classList.toggle('error', show);
+    }
+
     function validatePage(n) {
+      let valid = true;
       if (n === 1) {
-        const name = document.querySelector('[name="name"]').value.trim();
-        const phone = document.querySelector('[name="phone"]').value.trim();
-        const loc = document.querySelector('[name="location"]').value.trim();
-        if (!name || !phone || !loc) { alert('Please fill in your name, phone, and city/ZIP.'); return false; }
+        const name = document.querySelector('[name="name"]');
+        const phone = document.querySelector('[name="phone"]');
+        const email = document.querySelector('[name="email"]');
+        const loc = document.querySelector('[name="location"]');
+
+        const nameOk = name.value.trim().length >= 2;
+        showError(name, !nameOk);
+        if (!nameOk) valid = false;
+
+        const phoneDigits = phone.value.replace(/\D/g,'');
+        const phoneOk = phoneDigits.length >= 7 && phoneDigits.length <= 15;
+        showError(phone, !phoneOk);
+        if (!phoneOk) valid = false;
+
+        if (email.value.trim()) {
+          const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+          showError(email, !emailOk);
+          if (!emailOk) valid = false;
+        }
+
+        const locOk = loc.value.trim().length >= 3;
+        showError(loc, !locOk);
+        if (!locOk) valid = false;
       }
       if (n === 2) {
         const type = document.querySelector('[name="removal_type"]').value;
@@ -646,7 +698,7 @@
         if (!type) { alert('Please select what needs to be removed.'); return false; }
         if (!size) { alert('Please select a job size.'); return false; }
       }
-      return true;
+      return valid;
     }
 
     async function nextPage() {
