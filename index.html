@@ -530,7 +530,8 @@
       <div class="hero-form-box">
         <h3>Get a Fast Quote</h3>
         <p>Fill in your details and we'll get back to you within the hour.</p>
-        <form class="quote-form" onsubmit="submitQuote(event)">
+        <form class="quote-form" action="https://formspree.io/f/fluehrjunkremoval@gmail.com" method="POST" onsubmit="heroFormSent(event)">
+          <input type="hidden" name="_subject" value="New Quote Request - Fluehr Junk Removal" />
           <input type="text" name="name" placeholder="Your Name" required />
           <div class="form-row">
             <input type="tel" name="phone" placeholder="Phone Number" required />
@@ -714,7 +715,8 @@
         <div class="contact-cta">
           <h3>Get Your Free Quote</h3>
           <p>Fill out the form and we'll get back to you fast — usually within the hour.</p>
-          <form class="quote-form" onsubmit="submitQuote(event)">
+          <form class="quote-form" action="https://formspree.io/f/fluehrjunkremoval@gmail.com" method="POST" onsubmit="contactFormSent(event)">
+            <input type="hidden" name="_subject" value="New Quote Request - Fluehr Junk Removal" />
             <input type="text" name="name" placeholder="Your Name" required />
             <div class="form-row">
               <input type="tel" name="phone" placeholder="Phone Number" required />
@@ -739,19 +741,26 @@
   </footer>
 
   <script>
-    function submitQuote(e) {
-      e.preventDefault();
-      const form = e.target;
-      const name = form.name.value;
-      const phone = form.phone.value;
-      const zip = form.zip.value;
-      // mailto fallback — opens email client with the details
-      const subject = encodeURIComponent('Quote Request from ' + name);
-      const body = encodeURIComponent('Name: ' + name + '\nPhone: ' + phone + '\nZip: ' + zip);
-      window.location.href = 'mailto:fluehrjunkremoval@gmail.com?subject=' + subject + '&body=' + body;
-      form.reset();
-      document.getElementById('formSuccess').style.display = 'block';
+    async function submitForm(form, successId) {
+      const data = new FormData(form);
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          form.reset();
+          document.getElementById(successId).style.display = 'block';
+        } else {
+          alert('Something went wrong. Please call us at (267) 910-9696.');
+        }
+      } catch(e) {
+        alert('Something went wrong. Please call us at (267) 910-9696.');
+      }
     }
+    function heroFormSent(e) { e.preventDefault(); submitForm(e.target, 'formSuccess'); }
+    function contactFormSent(e) { e.preventDefault(); submitForm(e.target, 'formSuccess2'); }
     function toggleNav(btn) {
       btn.classList.toggle('open');
       document.querySelector('.nav-links').classList.toggle('open');
