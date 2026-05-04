@@ -34,13 +34,16 @@
       display: flex;
       align-items: center;
       padding: 0 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
     nav img { height: 46px; object-fit: contain; }
 
     /* ── HEADER BAND ── */
     .form-header {
       background: var(--dark);
-      padding: 48px 2rem 40px;
+      padding: 72px 2rem 48px;
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -401,8 +404,10 @@
         <div class="step-tab" id="tab3"><span class="step-num">3</span> Schedule</div>
       </div>
 
-      <form id="quoteForm" action="https://formspree.io/f/fluehrjunkremoval@gmail.com" method="POST">
+      <form id="quoteForm" action="https://formsubmit.co/fluehrjunkremoval@gmail.com" method="POST">
         <input type="hidden" name="_subject" value="New Quote Request — Fluehr Junk Removal" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_template" value="table" />
         <input type="hidden" name="preferred_date" id="hiddenDate" />
 
         <!-- PAGE 1: Basic Info -->
@@ -658,7 +663,7 @@
         btn.textContent = 'Sending…';
         btn.disabled = true;
         try {
-          const res = await fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
+          const res = await fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' } });
           if (res.ok) {
             document.getElementById('confirmPhone').textContent = document.querySelector('[name="phone"]').value;
             document.querySelectorAll('.form-page').forEach(p => p.style.display = 'none');
