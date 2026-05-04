@@ -416,6 +416,54 @@
       .why-grid { grid-template-columns: 1fr; }
       .eco-stats { gap: 2rem; }
     }
+
+    /* ── QUOTE FORM ── */
+    .quote-form { display: flex; flex-direction: column; gap: 0.85rem; margin-top: 1.25rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+    .quote-form input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border-radius: 5px;
+      border: 1.5px solid #333;
+      background: #1a1a1a;
+      color: var(--white);
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .quote-form input::placeholder { color: #666; }
+    .quote-form input:focus { border-color: var(--green); }
+    .quote-form .btn-submit {
+      width: 100%;
+      padding: 0.9rem;
+      background: var(--green);
+      color: var(--dark);
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      letter-spacing: 0.03em;
+      transition: opacity 0.2s, transform 0.15s;
+      font-family: inherit;
+    }
+    .quote-form .btn-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+    .form-success {
+      display: none;
+      background: rgba(110,197,49,0.12);
+      border: 1px solid var(--green);
+      border-radius: 5px;
+      padding: 1rem;
+      text-align: center;
+      color: var(--green);
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-top: 0.5rem;
+    }
+    @media (max-width: 480px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -625,14 +673,17 @@
         </div>
         <div class="contact-cta">
           <h3>Get Your Free Quote</h3>
-          <p>Call or text us anytime. We'll give you a straight answer and a fair price — no runaround.</p>
-          <a href="tel:+12679109696" class="btn btn-primary">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg>
-            Call Now
-          </a>
-          <a href="https://www.facebook.com/share/1Smz7WUDFa/" target="_blank" rel="noopener" class="btn btn-outline">
-            Message on Facebook
-          </a>
+          <p>Fill out the form and we'll get back to you fast — usually within the hour.</p>
+          <form class="quote-form" onsubmit="submitQuote(event)">
+            <input type="text" name="name" placeholder="Your Name" required />
+            <div class="form-row">
+              <input type="tel" name="phone" placeholder="Phone Number" required />
+              <input type="text" name="zip" placeholder="Zip Code" required />
+            </div>
+            <button type="submit" class="btn-submit">Request a Free Quote →</button>
+          </form>
+          <div class="form-success" id="formSuccess">✓ Got it! We'll be in touch shortly.</div>
+          <a href="tel:+12679109696" style="display:block;text-align:center;margin-top:1.25rem;color:#aaa;font-size:0.85rem;text-decoration:none;">Or call us directly: <strong style="color:var(--green)">(267) 910-9696</strong></a>
         </div>
       </div>
     </div>
@@ -648,6 +699,19 @@
   </footer>
 
   <script>
+    function submitQuote(e) {
+      e.preventDefault();
+      const form = e.target;
+      const name = form.name.value;
+      const phone = form.phone.value;
+      const zip = form.zip.value;
+      // mailto fallback — opens email client with the details
+      const subject = encodeURIComponent('Quote Request from ' + name);
+      const body = encodeURIComponent('Name: ' + name + '\nPhone: ' + phone + '\nZip: ' + zip);
+      window.location.href = 'mailto:fluehrjunkremoval@gmail.com?subject=' + subject + '&body=' + body;
+      form.reset();
+      document.getElementById('formSuccess').style.display = 'block';
+    }
     function toggleNav(btn) {
       btn.classList.toggle('open');
       document.querySelector('.nav-links').classList.toggle('open');
