@@ -404,9 +404,10 @@
       nav { position: relative; }
 
       .hero { min-height: auto; padding: 80px 1.25rem 70px; }
+      .hero-inner { grid-template-columns: 1fr !important; }
+      .hero-form-box { order: 3; margin-top: 2rem; }
       .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
       .hero-logo-wrap { order: -1; }
-      .hero-logo-wrap img { max-width: 280px; }
       .hero h1 { font-size: 2rem; }
       .hero p { font-size: 0.95rem; }
       .hero-trust { gap: 1.25rem; }
@@ -461,6 +462,34 @@
       font-size: 0.95rem;
       margin-top: 0.5rem;
     }
+
+    /* ── HERO FORM BOX ── */
+    .hero-form-box {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(110,197,49,0.25);
+      border-radius: 12px;
+      padding: 2rem;
+      backdrop-filter: blur(6px);
+    }
+    .hero-form-box h3 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 0.35rem;
+    }
+    .hero-form-box p {
+      font-size: 0.82rem;
+      color: #999;
+      margin-bottom: 1.25rem;
+      line-height: 1.5;
+    }
+    .hero-form-box .quote-form input {
+      background: rgba(255,255,255,0.07);
+      border: 1.5px solid #333;
+      color: var(--white);
+    }
+    .hero-form-box .quote-form input:focus { border-color: var(--green); }
+    .hero-form-box .quote-form input::placeholder { color: #666; }
     @media (max-width: 480px) {
       .form-row { grid-template-columns: 1fr; }
     }
@@ -498,8 +527,19 @@
         <div class="hero-trust">
         </div>
       </div>
-      <div class="hero-logo-wrap">
-        <img src="https://raw.githubusercontent.com/topoftheridge/fluehr-junk-removal/main/fluehrjunkremovalhero.png" alt="Fluehr Junk Removal">
+      <div class="hero-form-box">
+        <h3>Get a Fast Quote</h3>
+        <p>Fill in your details and we'll get back to you within the hour.</p>
+        <form class="quote-form" onsubmit="submitQuote(event)">
+          <input type="text" name="name" placeholder="Your Name" required />
+          <div class="form-row">
+            <input type="tel" name="phone" placeholder="Phone Number" required />
+            <input type="text" name="zip" placeholder="Zip Code" required />
+          </div>
+          <button type="submit" class="btn-submit">Request a Free Quote →</button>
+        </form>
+        <div class="form-success" id="formSuccess">✓ We'll be in touch shortly!</div>
+        <p style="text-align:center;margin-top:1rem;font-size:0.8rem;color:#777;">Or call: <a href="tel:+12679109696" style="color:var(--green);font-weight:700;">(267) 910-9696</a></p>
       </div>
     </div>
   </header>
@@ -682,7 +722,7 @@
             </div>
             <button type="submit" class="btn-submit">Request a Free Quote →</button>
           </form>
-          <div class="form-success" id="formSuccess">✓ Got it! We'll be in touch shortly.</div>
+          <div class="form-success" id="formSuccess2">✓ Got it! We'll be in touch shortly.</div>
           <a href="tel:+12679109696" style="display:block;text-align:center;margin-top:1.25rem;color:#aaa;font-size:0.85rem;text-decoration:none;">Or call us directly: <strong style="color:var(--green)">(267) 910-9696</strong></a>
         </div>
       </div>
