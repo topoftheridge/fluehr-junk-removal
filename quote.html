@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Get a Free Quote · Fluehr Junk Removal</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green:  #6EC531;
+      --dark:   #111111;
+      --gray:   #1a1a1a;
+      --light:  #f6f6f6;
+      --muted:  #666;
+      --text:   #1a1a1a;
+      --white:  #ffffff;
+      --border: #e2e2e2;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--light);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--white);
+      border-bottom: 2px solid var(--green);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+    }
+    nav img { height: 46px; object-fit: contain; }
+
+    /* ── HEADER BAND ── */
+    .form-header {
+      background: var(--dark);
+      padding: 48px 2rem 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .form-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 100%, rgba(110,197,49,0.15) 0%, transparent 70%);
+    }
+    .form-header-inner { position: relative; }
+    .form-header .badge {
+      display: inline-block;
+      background: var(--green);
+      color: var(--dark);
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 2px;
+      margin-bottom: 1rem;
+    }
+    .form-header h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 900;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    .form-header h1 span { color: var(--green); }
+    .form-header p { font-size: 1rem; color: #aaa; }
+
+    /* ── FORM CARD ── */
+    .form-wrap {
+      max-width: 780px;
+      margin: -32px auto 60px;
+      padding: 0 1.25rem;
+    }
+
+    .form-card {
+      background: var(--white);
+      border-radius: 14px;
+      box-shadow: 0 4px 40px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    /* ── STEPS NAV ── */
+    .steps-nav {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-bottom: 2px solid var(--border);
+    }
+    .step-tab {
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #bbb;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: color 0.2s;
+      cursor: default;
+    }
+    .step-tab.active { color: var(--dark); border-bottom-color: var(--green); }
+    .step-tab.done { color: var(--green); }
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: #eee;
+      color: #999;
+      font-size: 0.72rem;
+      font-weight: 800;
+      margin-right: 0.4rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .step-tab.active .step-num { background: var(--green); color: var(--dark); }
+    .step-tab.done .step-num { background: var(--green); color: var(--dark); }
+
+    /* ── FORM PAGES ── */
+    .form-page { display: none; padding: 2.5rem 2.5rem 2rem; }
+    .form-page.active { display: block; }
+
+    .page-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 0.25rem;
+    }
+    .page-sub { font-size: 0.875rem; color: var(--muted); margin-bottom: 2rem; }
+
+    /* ── FIELDS ── */
+    .field-group { display: flex; flex-direction: column; gap: 1.25rem; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+
+    .field label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      margin-bottom: 0.45rem;
+    }
+    .field label span { color: var(--green); }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 7px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      color: var(--text);
+      background: var(--white);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(110,197,49,0.12);
+    }
+    .field textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+
+    .select-wrap { position: relative; }
+    .select-wrap::after {
+      content: '';
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0; height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 6px solid #999;
+      pointer-events: none;
+    }
+
+    /* ── JOB SIZE CARDS ── */
+    .size-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .size-card input[type="radio"] { display: none; }
+    .size-card label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.6rem;
+      padding: 1.25rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      font-size: inherit;
+      font-weight: inherit;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--text);
+    }
+    .size-card label:hover { border-color: var(--green); background: #f9fff4; }
+    .size-card input:checked + label {
+      border-color: var(--green);
+      background: #f2fde8;
+    }
+    .size-icon {
+      font-size: 2rem;
+      line-height: 1;
+    }
+    .size-card label strong {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--dark);
+    }
+    .size-card label span {
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* ── CALENDAR ── */
+    .calendar-wrap {
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .cal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      background: var(--dark);
+      color: var(--white);
+    }
+    .cal-header h3 { font-size: 1rem; font-weight: 700; }
+    .cal-nav {
+      background: none;
+      border: 1px solid #444;
+      border-radius: 5px;
+      color: var(--white);
+      width: 32px; height: 32px;
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .cal-nav:hover { background: rgba(255,255,255,0.1); }
+    .cal-days-header {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      background: #f0f0f0;
+    }
+    .cal-days-header span {
+      text-align: center;
+      padding: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+    }
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      padding: 0.5rem;
+      gap: 4px;
+    }
+    .cal-day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 7px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.15s;
+      color: var(--text);
+    }
+    .cal-day:hover:not(.empty):not(.past) { background: #f2fde8; border-color: var(--green); }
+    .cal-day.selected { background: var(--green); color: var(--dark); font-weight: 800; border-color: var(--green); }
+    .cal-day.today { border-color: #ddd; font-weight: 800; }
+    .cal-day.past { color: #ccc; cursor: default; }
+    .cal-day.empty { cursor: default; }
+    .selected-date-display {
+      padding: 0.75rem 1.25rem;
+      background: #f9fff4;
+      border-top: 1px solid var(--border);
+      font-size: 0.875rem;
+      color: var(--dark);
+      font-weight: 600;
+      min-height: 44px;
+    }
+    .selected-date-display span { color: var(--green); }
+
+    /* ── FORM FOOTER ── */
+    .form-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 2.5rem 2rem;
+      border-top: 1px solid var(--border);
+      gap: 1rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.75rem;
+      border-radius: 7px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+      transition: opacity 0.2s, transform 0.15s;
+      text-decoration: none;
+    }
+    .btn:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-primary { background: var(--green); color: var(--dark); }
+    .btn-ghost { background: none; border: 1.5px solid var(--border); color: var(--muted); }
+    .btn-ghost:hover { border-color: #ccc; color: var(--dark); transform: none; }
+    .progress-dots { display: flex; gap: 6px; }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #ddd;
+      transition: background 0.2s;
+    }
+    .dot.active { background: var(--green); }
+
+    /* ── SUCCESS ── */
+    .success-screen {
+      display: none;
+      padding: 3.5rem 2.5rem;
+      text-align: center;
+    }
+    .success-screen.active { display: block; }
+    .success-icon {
+      width: 72px; height: 72px;
+      background: #f2fde8;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem;
+      color: var(--green);
+    }
+    .success-icon svg { width: 36px; height: 36px; }
+    .success-screen h2 { font-size: 1.75rem; font-weight: 900; color: var(--dark); margin-bottom: 0.5rem; }
+    .success-screen p { font-size: 1rem; color: var(--muted); margin-bottom: 2rem; line-height: 1.7; }
+    .success-screen a { color: var(--green); font-weight: 700; text-decoration: none; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 600px) {
+      .form-page { padding: 1.75rem 1.25rem 1rem; }
+      .form-footer { padding: 1.25rem 1.25rem 1.5rem; }
+      .field-row { grid-template-columns: 1fr; }
+      .size-cards { grid-template-columns: 1fr; gap: 0.75rem; }
+      .size-card label { flex-direction: row; text-align: left; padding: 1rem; }
+      .size-icon { font-size: 1.5rem; flex-shrink: 0; }
+      .step-tab { font-size: 0.68rem; padding: 0.75rem 0.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/"><img src="https://raw.githubusercontent.com/topoftheridge/fluehr-junk-removal/main/fluehrjunkremovalhero.png" alt="Fluehr Junk Removal"></a>
+  </nav>
+
+  <!-- HEADER -->
+  <div class="form-header">
+    <div class="form-header-inner">
+      <div class="badge">Free · No Obligation</div>
+      <h1>Get a <span>Free Quote</span></h1>
+      <p>Takes less than 2 minutes. We'll get back to you fast.</p>
+    </div>
+  </div>
+
+  <!-- FORM CARD -->
+  <div class="form-wrap">
+    <div class="form-card">
+
+      <!-- STEP TABS -->
+      <div class="steps-nav">
+        <div class="step-tab active" id="tab1"><span class="step-num">1</span> Your Info</div>
+        <div class="step-tab" id="tab2"><span class="step-num">2</span> The Job</div>
+        <div class="step-tab" id="tab3"><span class="step-num">3</span> Schedule</div>
+      </div>
+
+      <form id="quoteForm" action="https://formspree.io/f/fluehrjunkremoval@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="New Quote Request — Fluehr Junk Removal" />
+        <input type="hidden" name="preferred_date" id="hiddenDate" />
+
+        <!-- PAGE 1: Basic Info -->
+        <div class="form-page active" id="page1">
+          <div class="page-title">Basic Information</div>
+          <p class="page-sub">Tell us who you are and where you're located.</p>
+          <div class="field-group">
+            <div class="field-row">
+              <div class="field">
+                <label>Full Name <span>*</span></label>
+                <input type="text" name="name" placeholder="John Smith" required />
+              </div>
+              <div class="field">
+                <label>Phone Number <span>*</span></label>
+                <input type="tel" name="phone" placeholder="(267) 555-0100" required />
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label>Email <span style="color:#bbb;font-weight:400;">(optional)</span></label>
+                <input type="email" name="email" placeholder="you@email.com" />
+              </div>
+              <div class="field">
+                <label>City / ZIP <span>*</span></label>
+                <input type="text" name="location" placeholder="Philadelphia, PA or 19103" required />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAGE 2: Job Details -->
+        <div class="form-page" id="page2">
+          <div class="page-title">Job Details</div>
+          <p class="page-sub">What are we hauling and how big is the job?</p>
+          <div class="field-group">
+
+            <div class="field">
+              <label>What needs to be removed? <span>*</span></label>
+              <div class="select-wrap">
+                <select name="removal_type" required>
+                  <option value="" disabled selected>Select a category…</option>
+                  <option>Furniture</option>
+                  <option>Appliances</option>
+                  <option>Construction Debris</option>
+                  <option>Yard Waste</option>
+                  <option>General Junk</option>
+                  <option>Full Home / Estate Cleanout</option>
+                  <option>Hot Tub / Shed</option>
+                  <option>Garage / Basement Cleanout</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Job Size <span>*</span></label>
+              <div class="size-cards">
+                <div class="size-card">
+                  <input type="radio" name="job_size" id="small" value="Small (1–2 items)" required />
+                  <label for="small">
+                    <div class="size-icon">📦</div>
+                    <div>
+                      <strong>Small</strong>
+                      <span>1–2 items</span>
+                    </div>
+                  </label>
+                </div>
+                <div class="size-card">
+                  <input type="radio" name="job_size" id="medium" value="Medium (room / partial cleanout)" />
+                  <label for="medium">
+                    <div class="size-icon">🛋️</div>
+                    <div>
+                      <strong>Medium</strong>
+                      <span>Room / partial cleanout</span>
+                    </div>
+                  </label>
+                </div>
+                <div class="size-card">
+                  <input type="radio" name="job_size" id="large" value="Large (full home / estate / construction)" />
+                  <label for="large">
+                    <div class="size-icon">🏠</div>
+                    <div>
+                      <strong>Large</strong>
+                      <span>Full home / estate / construction</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Description</label>
+              <textarea name="description" placeholder="List items or anything we should know…"></textarea>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- PAGE 3: Schedule -->
+        <div class="form-page" id="page3">
+          <div class="page-title">Preferred Date</div>
+          <p class="page-sub">Pick a date that works for you. We'll confirm availability.</p>
+          <div class="field">
+            <div class="calendar-wrap">
+              <div class="cal-header">
+                <button type="button" class="cal-nav" onclick="changeMonth(-1)">&#8249;</button>
+                <h3 id="calTitle"></h3>
+                <button type="button" class="cal-nav" onclick="changeMonth(1)">&#8250;</button>
+              </div>
+              <div class="cal-days-header">
+                <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+              </div>
+              <div class="cal-grid" id="calGrid"></div>
+              <div class="selected-date-display" id="dateDisplay">No date selected yet.</div>
+            </div>
+          </div>
+        </div>
+
+      </form>
+
+      <!-- SUCCESS -->
+      <div class="success-screen" id="successScreen">
+        <div class="success-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.801 10A10 10 0 1 1 17 3.335"/><path d="m9 11 3 3L22 4"/></svg>
+        </div>
+        <h2>You're all set!</h2>
+        <p>We received your quote request and will reach out to <strong id="confirmPhone"></strong> shortly.<br>Questions? Call or text us at <a href="tel:+12679109696">(267) 910-9696</a>.</p>
+        <a href="/" style="display:inline-flex;align-items:center;gap:.5rem;background:var(--green);color:var(--dark);padding:.8rem 1.75rem;border-radius:7px;font-weight:800;font-size:.95rem;text-decoration:none;">← Back to Home</a>
+      </div>
+
+      <!-- FORM FOOTER -->
+      <div class="form-footer" id="formFooter">
+        <button type="button" class="btn btn-ghost" id="backBtn" onclick="prevPage()" style="visibility:hidden;">← Back</button>
+        <div class="progress-dots">
+          <div class="dot active" id="dot1"></div>
+          <div class="dot" id="dot2"></div>
+          <div class="dot" id="dot3"></div>
+        </div>
+        <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextPage()">Next →</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    let currentPage = 1;
+    let selectedDate = null;
+    let calYear, calMonth;
+
+    const today = new Date();
+    calYear = today.getFullYear();
+    calMonth = today.getMonth();
+
+    function renderCalendar() {
+      const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      document.getElementById('calTitle').textContent = months[calMonth] + ' ' + calYear;
+      const grid = document.getElementById('calGrid');
+      grid.innerHTML = '';
+
+      const firstDay = new Date(calYear, calMonth, 1).getDay();
+      const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+
+      for (let i = 0; i < firstDay; i++) {
+        const el = document.createElement('div');
+        el.className = 'cal-day empty';
+        grid.appendChild(el);
+      }
+
+      for (let d = 1; d <= daysInMonth; d++) {
+        const el = document.createElement('div');
+        el.className = 'cal-day';
+        el.textContent = d;
+
+        const thisDate = new Date(calYear, calMonth, d);
+        const isToday = thisDate.toDateString() === today.toDateString();
+        const isPast = thisDate < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+        if (isPast) el.classList.add('past');
+        if (isToday) el.classList.add('today');
+        if (selectedDate && thisDate.toDateString() === selectedDate.toDateString()) el.classList.add('selected');
+
+        if (!isPast) {
+          el.addEventListener('click', () => selectDate(thisDate, el));
+        }
+        grid.appendChild(el);
+      }
+    }
+
+    function selectDate(date, el) {
+      selectedDate = date;
+      document.querySelectorAll('.cal-day').forEach(d => d.classList.remove('selected'));
+      el.classList.add('selected');
+      const opts = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const formatted = date.toLocaleDateString('en-US', opts);
+      document.getElementById('dateDisplay').innerHTML = 'Selected: <span>' + formatted + '</span>';
+      document.getElementById('hiddenDate').value = formatted;
+    }
+
+    function changeMonth(dir) {
+      calMonth += dir;
+      if (calMonth > 11) { calMonth = 0; calYear++; }
+      if (calMonth < 0) { calMonth = 11; calYear--; }
+      renderCalendar();
+    }
+
+    function showPage(n) {
+      document.querySelectorAll('.form-page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page' + n).classList.add('active');
+
+      ['tab1','tab2','tab3'].forEach((id, i) => {
+        const tab = document.getElementById(id);
+        tab.classList.remove('active','done');
+        if (i + 1 === n) tab.classList.add('active');
+        if (i + 1 < n) tab.classList.add('done');
+      });
+
+      ['dot1','dot2','dot3'].forEach((id, i) => {
+        document.getElementById(id).classList.toggle('active', i + 1 <= n);
+      });
+
+      document.getElementById('backBtn').style.visibility = n > 1 ? 'visible' : 'hidden';
+      document.getElementById('nextBtn').textContent = n === 3 ? 'Submit Quote ✓' : 'Next →';
+      currentPage = n;
+    }
+
+    function validatePage(n) {
+      if (n === 1) {
+        const name = document.querySelector('[name="name"]').value.trim();
+        const phone = document.querySelector('[name="phone"]').value.trim();
+        const loc = document.querySelector('[name="location"]').value.trim();
+        if (!name || !phone || !loc) { alert('Please fill in your name, phone, and city/ZIP.'); return false; }
+      }
+      if (n === 2) {
+        const type = document.querySelector('[name="removal_type"]').value;
+        const size = document.querySelector('[name="job_size"]:checked');
+        if (!type) { alert('Please select what needs to be removed.'); return false; }
+        if (!size) { alert('Please select a job size.'); return false; }
+      }
+      return true;
+    }
+
+    async function nextPage() {
+      if (!validatePage(currentPage)) return;
+      if (currentPage < 3) {
+        showPage(currentPage + 1);
+        if (currentPage === 3) renderCalendar();
+      } else {
+        // Submit
+        if (!selectedDate) { alert('Please pick a preferred date.'); return; }
+        const form = document.getElementById('quoteForm');
+        const data = new FormData(form);
+        const btn = document.getElementById('nextBtn');
+        btn.textContent = 'Sending…';
+        btn.disabled = true;
+        try {
+          const res = await fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
+          if (res.ok) {
+            document.getElementById('confirmPhone').textContent = document.querySelector('[name="phone"]').value;
+            document.querySelectorAll('.form-page').forEach(p => p.style.display = 'none');
+            document.querySelector('.steps-nav').style.display = 'none';
+            document.getElementById('formFooter').style.display = 'none';
+            document.getElementById('successScreen').classList.add('active');
+          } else {
+            alert('Something went wrong. Please call us at (267) 910-9696.');
+            btn.textContent = 'Submit Quote ✓';
+            btn.disabled = false;
+          }
+        } catch(e) {
+          alert('Something went wrong. Please call us at (267) 910-9696.');
+          btn.textContent = 'Submit Quote ✓';
+          btn.disabled = false;
+        }
+      }
+    }
+
+    function prevPage() {
+      if (currentPage > 1) showPage(currentPage - 1);
+    }
+
+    // Init calendar
+    renderCalendar();
+  </script>
+
+</body>
+</html>
